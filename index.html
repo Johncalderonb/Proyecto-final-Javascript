@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rutas Seguras Kids</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header__brand">
+        <span class="header__icon">🚌</span>
+        <h1 class="header__title">Rutas Seguras Kids</h1>
+      </div>
+      <div class="header__clima" id="clima-widget">
+        <span class="clima__icono" id="clima-icono">🌤️</span>
+        <div class="clima__info">
+          <span class="clima__ciudad" id="clima-ciudad">Girón, Colombia</span>
+          <span class="clima__temp" id="clima-temp">Cargando...</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- FORMULARIO NUEVA RUTA -->
+      <section class="seccion seccion--formulario">
+        <h2 class="seccion__titulo">Nueva Ruta</h2>
+        <form class="formulario" id="form-ruta" novalidate>
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="input-nombre">Nombre de la ruta</label>
+            <input class="formulario__input" type="text" id="input-nombre" placeholder="Ej: Ruta Norte" />
+            <span class="formulario__error" id="error-nombre"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="input-conductor">Conductor</label>
+            <input class="formulario__input" type="text" id="input-conductor" placeholder="Nombre del conductor" />
+            <span class="formulario__error" id="error-conductor"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="input-hora">Hora de salida</label>
+            <input class="formulario__input" type="time" id="input-hora" />
+            <span class="formulario__error" id="error-hora"></span>
+          </div>
+          <button class="boton boton--primario" type="submit" id="btn-agregar-ruta">
+            ➕ Agregar Ruta
+          </button>
+        </form>
+      </section>
+
+      <!-- LISTA DE RUTAS -->
+      <section class="seccion seccion--rutas">
+        <h2 class="seccion__titulo">Rutas Activas <span class="badge" id="contador-rutas">0</span></h2>
+        <div class="rutas-grid" id="rutas-grid">
+          <p class="mensaje-vacio" id="mensaje-vacio">No hay rutas registradas aún. ¡Agrega la primera!</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- MODAL EDITAR RUTA -->
+    <div class="modal" id="modal-editar" hidden>
+      <div class="modal__contenido">
+        <button class="modal__cerrar" id="btn-cerrar-modal">✕</button>
+        <h2 class="modal__titulo">Editar Ruta</h2>
+        <form class="formulario" id="form-editar" novalidate>
+          <input type="hidden" id="editar-id" />
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="editar-nombre">Nombre de la ruta</label>
+            <input class="formulario__input" type="text" id="editar-nombre" />
+            <span class="formulario__error" id="editar-error-nombre"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="editar-conductor">Conductor</label>
+            <input class="formulario__input" type="text" id="editar-conductor" />
+            <span class="formulario__error" id="editar-error-conductor"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="editar-hora">Hora de salida</label>
+            <input class="formulario__input" type="time" id="editar-hora" />
+          </div>
+          <button class="boton boton--primario" type="submit">💾 Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL AGREGAR ESTUDIANTE -->
+    <div class="modal" id="modal-estudiante" hidden>
+      <div class="modal__contenido">
+        <button class="modal__cerrar" id="btn-cerrar-estudiante">✕</button>
+        <h2 class="modal__titulo">Agregar Estudiante</h2>
+        <form class="formulario" id="form-estudiante" novalidate>
+          <input type="hidden" id="estudiante-ruta-id" />
+          <div class="formulario__grupo">
+            <label class="formulario__label" for="input-estudiante">Nombre del estudiante</label>
+            <input class="formulario__input" type="text" id="input-estudiante" placeholder="Nombre completo" />
+            <span class="formulario__error" id="error-estudiante"></span>
+          </div>
+          <button class="boton boton--primario" type="submit">➕ Agregar Estudiante</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- TEMPLATE PARA EL WEB COMPONENT (sin estilos, van en styles.css) -->
+    <template id="route-card-template">
+      <link rel="stylesheet" href="styles.css" />
+      <div class="card">
+        <div class="card__header">
+          <h3 class="card__nombre" id="card-nombre">—</h3>
+          <div class="card__acciones">
+            <button class="card__btn" id="btn-editar" title="Editar ruta">✏️</button>
+            <button class="card__btn" id="btn-eliminar" title="Eliminar ruta">🗑️</button>
+          </div>
+        </div>
+        <p class="card__detalle">🚗 Conductor: <span id="card-conductor">—</span></p>
+        <p class="card__detalle">🕐 Hora de salida: <span id="card-hora">—</span></p>
+        <hr class="card__separador" />
+        <p class="card__subtitulo">Estudiantes</p>
+        <ul class="card__lista-estudiantes" id="card-lista"></ul>
+        <p class="card__vacio" id="card-vacio" hidden>Sin estudiantes asignados.</p>
+        <button class="card__btn-agregar-est" id="btn-agregar-est">+ Agregar estudiante</button>
+      </div>
+    </template>
+
+    <!-- SCRIPT ÚNICO -->
+    <script src="app.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,572 @@
+/* ============================================================
+   styles.css — Estilos completos de Rutas Seguras Kids
+   Secciones:
+   1. Reset
+   2. Variables
+   3. Layout
+   4. Componentes
+   5. Responsive
+   ============================================================ */
+
+
+/* ============================================================
+   1. RESET — normalización base
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f0f4ff;
+  color: #222;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* ============================================================
+   2. VARIABLES — tokens de diseño globales
+   ============================================================ */
+
+:root {
+  --color-primario: #1a237e;
+  --color-primario-claro: #3949ab;
+  --color-acento: #f9a825;
+  --color-acento-hover: #f57f17;
+  --color-fondo: #f0f4ff;
+  --color-fondo-card: #ffffff;
+  --color-texto: #222222;
+  --color-texto-suave: #666666;
+  --color-error: #e53935;
+  --color-exito: #2e7d32;
+
+  --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --sombra-header: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  --radio-base: 10px;
+  --radio-grande: 16px;
+
+  --espacio-xs: 4px;
+  --espacio-sm: 8px;
+  --espacio-md: 16px;
+  --espacio-lg: 24px;
+  --espacio-xl: 40px;
+
+  --transicion: 0.2s ease;
+}
+
+
+/* ============================================================
+   3. LAYOUT — estructura general de la página
+   ============================================================ */
+
+/* --- HEADER --- */
+.header {
+  background-color: var(--color-primario);
+  color: #ffffff;
+  padding: var(--espacio-md) var(--espacio-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--sombra-header);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+}
+
+.header__icon {
+  font-size: 1.8rem;
+}
+
+.header__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* --- CLIMA WIDGET --- */
+.header__clima {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--radio-base);
+  padding: var(--espacio-xs) var(--espacio-md);
+}
+
+.clima__icono {
+  font-size: 1.5rem;
+}
+
+.clima__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.clima__ciudad {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.clima__temp {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* --- MAIN --- */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--espacio-xl) var(--espacio-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xl);
+}
+
+/* --- SECCIONES --- */
+.seccion {
+  background: var(--color-fondo-card);
+  border-radius: var(--radio-grande);
+  padding: var(--espacio-lg);
+  box-shadow: var(--sombra-card);
+}
+
+.seccion__titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin-bottom: var(--espacio-md);
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-sm);
+}
+
+/* --- GRID DE RUTAS --- */
+.rutas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--espacio-lg);
+}
+
+/* --- MODAL --- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal__contenido {
+  background: var(--color-fondo-card);
+  border-radius: var(--radio-grande);
+  padding: var(--espacio-lg);
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal__titulo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primario);
+  margin-bottom: var(--espacio-md);
+}
+
+.modal__cerrar {
+  position: absolute;
+  top: var(--espacio-sm);
+  right: var(--espacio-md);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--color-texto-suave);
+  cursor: pointer;
+  transition: color var(--transicion);
+}
+
+.modal__cerrar:hover {
+  color: var(--color-error);
+}
+
+
+/* ============================================================
+   4. COMPONENTES — formularios, botones y elementos reutilizables
+   ============================================================ */
+
+/* --- FORMULARIO --- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-md);
+}
+
+.formulario__grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xs);
+}
+
+.formulario__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.formulario__input {
+  border: 2px solid #e0e0e0;
+  border-radius: var(--radio-base);
+  padding: 10px var(--espacio-md);
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  background: #fafafa;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+  outline: none;
+}
+
+.formulario__input:focus {
+  border-color: var(--color-primario-claro);
+  box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.15);
+  background: #fff;
+}
+
+.formulario__input.invalido {
+  border-color: var(--color-error);
+}
+
+.formulario__error {
+  font-size: 0.78rem;
+  color: var(--color-error);
+  min-height: 16px;
+}
+
+/* --- BOTONES --- */
+.boton {
+  border: none;
+  border-radius: var(--radio-base);
+  padding: 10px var(--espacio-lg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background var(--transicion), transform var(--transicion);
+}
+
+.boton--primario {
+  background: var(--color-acento);
+  color: #1a237e;
+}
+
+.boton--primario:hover {
+  background: var(--color-acento-hover);
+  transform: translateY(-1px);
+}
+
+.boton--primario:active {
+  transform: translateY(0);
+}
+
+/* --- BADGE CONTADOR --- */
+.badge {
+  background: var(--color-acento);
+  color: var(--color-primario);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+/* --- MENSAJE VACÍO --- */
+.mensaje-vacio {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--color-texto-suave);
+  font-style: italic;
+  padding: var(--espacio-xl) 0;
+  font-size: 0.95rem;
+}
+
+/* --- TOAST NOTIFICACIONES --- */
+.toast {
+  position: fixed;
+  bottom: var(--espacio-lg);
+  right: var(--espacio-lg);
+  background: var(--color-primario);
+  color: #fff;
+  padding: var(--espacio-sm) var(--espacio-lg);
+  border-radius: var(--radio-base);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  z-index: 300;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast.exito {
+  background: var(--color-exito);
+}
+
+.toast.error {
+  background: var(--color-error);
+}
+
+
+/* ============================================================
+   5. RESPONSIVE — breakpoints
+   ============================================================ */
+
+/* Breakpoint 1: Tablets (máximo 900px) */
+@media (max-width: 900px) {
+  .header {
+    padding: var(--espacio-sm) var(--espacio-lg);
+  }
+
+  .header__title {
+    font-size: 1.1rem;
+  }
+
+  .main {
+    padding: var(--espacio-lg) var(--espacio-md);
+  }
+
+  .rutas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--espacio-md);
+  }
+}
+
+/* Breakpoint 2: Móviles grandes (máximo 600px) */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-sm);
+    padding: var(--espacio-sm) var(--espacio-md);
+  }
+
+  .header__clima {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .rutas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal__contenido {
+    margin: 0 var(--espacio-md);
+    padding: var(--espacio-md);
+  }
+
+  .seccion {
+    padding: var(--espacio-md);
+  }
+}
+
+/* Breakpoint 3: Móviles pequeños (máximo 380px) */
+@media (max-width: 380px) {
+  .header__title {
+    font-size: 0.95rem;
+  }
+
+  .header__icon {
+    font-size: 1.3rem;
+  }
+
+  .seccion__titulo {
+    font-size: 0.98rem;
+  }
+
+  .boton {
+    font-size: 0.88rem;
+    padding: 9px var(--espacio-md);
+  }
+
+  .formulario__input {
+    font-size: 0.88rem;
+  }
+
+  .toast {
+    left: var(--espacio-md);
+    right: var(--espacio-md);
+    bottom: var(--espacio-md);
+    text-align: center;
+  }
+}
+
+
+/* ============================================================
+   5. ROUTE-CARD — estilos del Web Component (Shadow DOM)
+   ============================================================ */
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #f9a825;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.13);
+}
+
+.card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.card__nombre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin: 0;
+}
+
+.card__acciones {
+  display: flex;
+  gap: 6px;
+}
+
+.card__btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.card__btn:hover {
+  background: #f0f0f0;
+}
+
+.card__detalle {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.card__detalle span {
+  font-weight: 600;
+  color: #333;
+}
+
+.card__separador {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 14px 0 10px;
+}
+
+.card__subtitulo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.card__lista-estudiantes {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card__estudiante {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f7ff;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.card__btn-eliminar-est {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e53935;
+  font-size: 0.9rem;
+  padding: 0 4px;
+}
+
+.card__btn-agregar-est {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition: background 0.15s;
+}
+
+.card__btn-agregar-est:hover {
+  background: #c8e6c9;
+}
+
+.card__vacio {
+  font-size: 0.82rem;
+  color: #aaa;
+  font-style: italic;
+  margin-bottom: 8px;
+}
