@@ -1,278 +1,554 @@
 /* ============================================================
-   styles.css — Estilos completos de Rutas Seguras Kids
+   styles.css — Rutas Seguras Kids
+   Paleta transporte: naranja energía + azul noche + blanco
    Secciones:
    1. Reset
    2. Variables
-   3. Layout
-   4. Componentes
-   5. Responsive
+   3. Login
+   4. Header
+   5. Layout general
+   6. Componentes (formularios, botones, badge, toast)
+   7. Tarjeta de ruta (Shadow DOM)
+   8. Footer
+   9. Responsive (3 breakpoints)
    ============================================================ */
 
 
 /* ============================================================
-   1. RESET — normalización base
+   1. RESET
    ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
+html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #f0f4ff;
-  color: #222;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
   min-height: 100vh;
   line-height: 1.5;
 }
 
-ul, ol {
-  list-style: none;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-input {
-  font-family: inherit;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
+ul, ol  { list-style: none; }
+button  { font-family: inherit; cursor: pointer; }
+input   { font-family: inherit; }
+a       { text-decoration: none; color: inherit; }
+svg     { display: block; }
 
 
 /* ============================================================
-   2. VARIABLES — tokens de diseño globales
+   2. VARIABLES — paleta transporte escolar
    ============================================================ */
-
 :root {
-  --color-primario: #1a237e;
-  --color-primario-claro: #3949ab;
-  --color-acento: #f9a825;
-  --color-acento-hover: #f57f17;
-  --color-fondo: #f0f4ff;
-  --color-fondo-card: #ffffff;
-  --color-texto: #222222;
-  --color-texto-suave: #666666;
-  --color-error: #e53935;
-  --color-exito: #2e7d32;
+  /* Colores principales */
+  --color-primario:       #0d47a1;   /* azul noche */
+  --color-primario-dark:  #082e6b;
+  --color-primario-light: #1976d2;
+  --color-acento:         #ff6f00;   /* naranja ruta */
+  --color-acento-hover:   #e65100;
+  --color-acento-light:   #fff3e0;
 
-  --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.08);
-  --sombra-header: 0 2px 8px rgba(0, 0, 0, 0.12);
+  /* Roles */
+  --color-admin:          #0d47a1;
+  --color-admin-light:    #e3f2fd;
+  --color-profesor:       #1b5e20;
+  --color-profesor-light: #e8f5e9;
 
-  --radio-base: 10px;
-  --radio-grande: 16px;
+  /* Neutros */
+  --color-fondo:          #f4f6fb;
+  --color-fondo-card:     #ffffff;
+  --color-texto:          #1a1a2e;
+  --color-texto-suave:    #607080;
+  --color-borde:          #dde3ed;
 
-  --espacio-xs: 4px;
-  --espacio-sm: 8px;
-  --espacio-md: 16px;
-  --espacio-lg: 24px;
-  --espacio-xl: 40px;
+  /* Semánticos */
+  --color-error:          #c62828;
+  --color-exito:          #2e7d32;
+  --color-warning:        #f57f17;
+
+  /* Sombras */
+  --sombra-sm:   0 1px 4px rgba(0,0,0,0.08);
+  --sombra-md:   0 4px 16px rgba(0,0,0,0.10);
+  --sombra-lg:   0 8px 32px rgba(0,0,0,0.14);
+
+  /* Radios */
+  --radio-sm:    6px;
+  --radio-md:    12px;
+  --radio-lg:    18px;
+
+  /* Espaciados */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 40px;
 
   --transicion: 0.2s ease;
 }
 
 
 /* ============================================================
-   3. LAYOUT — estructura general de la página
+   3. LOGIN
    ============================================================ */
 
-/* --- HEADER --- */
-.header {
-  background-color: var(--color-primario);
-  color: #ffffff;
-  padding: var(--espacio-md) var(--espacio-xl);
+/* Fondo degradado que ocupa toda la pantalla */
+.login-screen {
+  min-height: 100vh;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  box-shadow: var(--sombra-header);
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primario-dark) 0%, var(--color-primario) 55%, #1565c0 100%);
+  padding: var(--sp-md);
+}
+
+/* Tarjeta centrada con ancho máximo fijo */
+.login-card {
+  background: var(--color-fondo-card);
+  border-radius: var(--radio-lg);
+  padding: var(--sp-xl) 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+/* ── Branding ── */
+.login-brand {
+  text-align: center;
+  margin-bottom: var(--sp-lg);
+}
+
+.login-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--sp-sm);
+  box-shadow: 0 6px 20px rgba(255,111,0,0.40);
+  overflow: hidden;
+}
+
+.login-logo__icono { font-size: 2.2rem; line-height: 1; }
+.login-logo img    { width: 100%; height: 100%; object-fit: cover; }
+
+.login-brand__nombre {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--color-primario);
+  letter-spacing: 0.01em;
+  margin-bottom: 2px;
+}
+
+.login-brand__slogan {
+  font-size: 0.78rem;
+  color: var(--color-texto-suave);
+}
+
+/* ── Selector de rol ── */
+.login-roles {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+}
+
+.login-rol__btn {
+  flex: 1;
+  padding: 9px var(--sp-sm);
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  background: var(--color-fondo);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  transition: all var(--transicion);
+  cursor: pointer;
+}
+
+.login-rol__btn--activo[data-rol="admin"] {
+  border-color: var(--color-admin);
+  background: var(--color-admin-light);
+  color: var(--color-admin);
+}
+
+.login-rol__btn--activo[data-rol="profesor"] {
+  border-color: var(--color-profesor);
+  background: var(--color-profesor-light);
+  color: var(--color-profesor);
+}
+
+.login-rol__btn:hover:not(.login-rol__btn--activo) {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
+}
+
+/* ── Credenciales de demo ── */
+.login-hint {
+  font-size: 0.78rem;
+  background: var(--color-acento-light);
+  border: 1px solid #ffcc80;
+  border-radius: var(--radio-sm);
+  padding: 7px var(--sp-md);
+  color: #5d3300;
+  margin-bottom: var(--sp-md);
+  text-align: center;
+}
+
+/* ── Campos del formulario (versión login) ── */
+.formulario__etiqueta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
+.formulario__campo {
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  padding: 10px var(--sp-md);
+  font-size: 0.92rem;
+  color: var(--color-texto);
+  background: #fafbff;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+  outline: none;
+  width: 100%;
+}
+
+.formulario__campo:focus {
+  border-color: var(--color-primario-light);
+  box-shadow: 0 0 0 3px rgba(25,118,210,0.12);
+  background: #fff;
+}
+
+.formulario__campo.invalido { border-color: var(--color-error); }
+
+/* ── Wrapper contraseña con ojo ── */
+.campo-contrasena-wrapper {
+  position: relative;
+}
+
+.campo-contrasena-wrapper .formulario__campo {
+  padding-right: 44px;
+}
+
+.campo-contrasena__ojo {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 2px;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity var(--transicion);
+}
+
+.campo-contrasena__ojo:hover { opacity: 1; }
+
+/* ── Error general centrado ── */
+.formulario__error--centrado {
+  display: block;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+/* ============================================================
+   4. HEADER
+   ============================================================ */
+.header {
+  background: linear-gradient(90deg, var(--color-primario-dark), var(--color-primario));
+  color: #fff;
+  padding: var(--sp-sm) var(--sp-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  box-shadow: 0 2px 12px rgba(13,71,161,0.3);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
+/* Logo + nombre empresa */
 .header__brand {
   display: flex;
   align-items: center;
-  gap: var(--espacio-sm);
+  gap: var(--sp-sm);
+  min-width: 0;
 }
 
-.header__icon {
-  font-size: 1.8rem;
+.header__logo {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radio-sm);
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-.header__title {
-  font-size: 1.3rem;
-  font-weight: 700;
+.header__logo-icono { font-size: 1.6rem; line-height: 1; }
+.header__logo img   { width: 100%; height: 100%; object-fit: cover; }
+
+.header__texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__empresa {
+  font-size: 1.05rem;
+  font-weight: 800;
   letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
-/* --- CLIMA WIDGET --- */
+.header__subtitulo {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Clima (centro) */
+.header__centro { flex: 1; display: flex; justify-content: center; }
+
 .header__clima {
   display: flex;
   align-items: center;
-  gap: var(--espacio-sm);
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: var(--radio-base);
-  padding: var(--espacio-xs) var(--espacio-md);
+  gap: var(--sp-sm);
+  background: rgba(255,255,255,0.12);
+  border-radius: var(--radio-md);
+  padding: var(--sp-xs) var(--sp-md);
 }
 
-.clima__icono {
-  font-size: 1.5rem;
-}
+.clima__icono { font-size: 1.4rem; }
 
-.clima__info {
+.clima__info { display: flex; flex-direction: column; }
+
+.clima__ciudad { font-size: 0.7rem; opacity: 0.8; }
+.clima__temp   { font-size: 0.92rem; font-weight: 700; }
+
+/* Usuario y logout */
+.header__usuario {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+  flex-shrink: 0;
 }
 
-.clima__ciudad {
-  font-size: 0.75rem;
-  opacity: 0.8;
-}
-
-.clima__temp {
-  font-size: 0.95rem;
+.header__rol-badge {
+  font-size: 0.72rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-acento);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2px 10px;
 }
 
-/* --- MAIN --- */
-.main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: var(--espacio-xl) var(--espacio-lg);
+.header__rol-badge--profesor {
+  background: #43a047;
+}
+
+.header__nombre-usuario {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.boton--logout {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: var(--radio-sm);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  transition: background var(--transicion);
+}
+
+.boton--logout:hover { background: rgba(255,255,255,0.28); }
+
+
+/* ============================================================
+   5. LAYOUT GENERAL
+   ============================================================ */
+.app {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-xl);
+  min-height: 100vh;
 }
 
-/* --- SECCIONES --- */
+.main {
+  flex: 1;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: var(--sp-xl) var(--sp-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xl);
+  width: 100%;
+}
+
+/* Bienvenida de rol */
+.bienvenida {
+  border-left: 5px solid var(--color-acento);
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--color-fondo-card);
+  border-radius: 0 var(--radio-md) var(--radio-md) 0;
+  box-shadow: var(--sombra-sm);
+}
+
+.bienvenida__titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.bienvenida__texto {
+  font-size: 0.88rem;
+  color: var(--color-texto-suave);
+  margin-top: 2px;
+}
+
+/* Secciones */
 .seccion {
   background: var(--color-fondo-card);
-  border-radius: var(--radio-grande);
-  padding: var(--espacio-lg);
-  box-shadow: var(--sombra-card);
+  border-radius: var(--radio-lg);
+  padding: var(--sp-lg);
+  box-shadow: var(--sombra-md);
 }
 
 .seccion__titulo {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--color-primario);
-  margin-bottom: var(--espacio-md);
+  margin-bottom: var(--sp-md);
   display: flex;
   align-items: center;
-  gap: var(--espacio-sm);
+  gap: var(--sp-sm);
 }
 
-/* --- GRID DE RUTAS --- */
+/* Formulario horizontal (admin nueva ruta) */
+.formulario--horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px auto;
+  gap: var(--sp-md);
+  align-items: end;
+}
+
+.formulario--horizontal .boton--submit {
+  height: 44px;
+  white-space: nowrap;
+}
+
+/* Grid de tarjetas */
 .rutas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--espacio-lg);
+  gap: var(--sp-lg);
 }
 
-/* --- MODAL --- */
+/* Modales */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 200;
+  padding: var(--sp-md);
 }
 
-.modal[hidden] {
-  display: none;
-}
+.modal[hidden] { display: none; }
 
 .modal__contenido {
   background: var(--color-fondo-card);
-  border-radius: var(--radio-grande);
-  padding: var(--espacio-lg);
+  border-radius: var(--radio-lg);
+  padding: var(--sp-lg);
   width: 100%;
   max-width: 440px;
   position: relative;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--sombra-lg);
 }
 
 .modal__titulo {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--color-primario);
-  margin-bottom: var(--espacio-md);
+  margin-bottom: var(--sp-md);
 }
 
 .modal__cerrar {
   position: absolute;
-  top: var(--espacio-sm);
-  right: var(--espacio-md);
+  top: var(--sp-sm);
+  right: var(--sp-md);
   background: none;
   border: none;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--color-texto-suave);
-  cursor: pointer;
   transition: color var(--transicion);
 }
 
-.modal__cerrar:hover {
-  color: var(--color-error);
-}
+.modal__cerrar:hover { color: var(--color-error); }
 
 
 /* ============================================================
-   4. COMPONENTES — formularios, botones y elementos reutilizables
+   6. COMPONENTES — formularios, botones, badge, toast
    ============================================================ */
 
-/* --- FORMULARIO --- */
+/* Formulario vertical (default) */
 .formulario {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-md);
+  gap: var(--sp-md);
 }
 
 .formulario__grupo {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-xs);
+  gap: var(--sp-xs);
 }
 
-.formulario__label {
-  font-size: 0.85rem;
+/* formulario__label y formulario__etiqueta son equivalentes */
+.formulario__label,
+.formulario__etiqueta {
+  font-size: 0.84rem;
   font-weight: 600;
   color: var(--color-texto);
 }
 
-.formulario__input {
-  border: 2px solid #e0e0e0;
-  border-radius: var(--radio-base);
-  padding: 10px var(--espacio-md);
+/* formulario__input y formulario__campo son equivalentes */
+.formulario__input,
+.formulario__campo {
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  padding: 10px var(--sp-md);
   font-size: 0.95rem;
   color: var(--color-texto);
-  background: #fafafa;
+  background: #fafbff;
   transition: border-color var(--transicion), box-shadow var(--transicion);
   outline: none;
+  width: 100%;
+  font-family: inherit;
 }
 
-.formulario__input:focus {
-  border-color: var(--color-primario-claro);
-  box-shadow: 0 0 0 3px rgba(57, 73, 171, 0.15);
+.formulario__input:focus,
+.formulario__campo:focus {
+  border-color: var(--color-primario-light);
+  box-shadow: 0 0 0 3px rgba(25,118,210,0.13);
   background: #fff;
 }
 
-.formulario__input.invalido {
-  border-color: var(--color-error);
-}
+.formulario__input.invalido,
+.formulario__campo.invalido { border-color: var(--color-error); }
 
 .formulario__error {
   font-size: 0.78rem;
@@ -280,244 +556,149 @@ a {
   min-height: 16px;
 }
 
-/* --- BOTONES --- */
+/* Botones */
 .boton {
   border: none;
-  border-radius: var(--radio-base);
-  padding: 10px var(--espacio-lg);
+  border-radius: var(--radio-sm);
+  padding: 10px var(--sp-lg);
   font-size: 0.95rem;
-  font-weight: 600;
-  transition: background var(--transicion), transform var(--transicion);
+  font-weight: 700;
+  transition: background var(--transicion), transform var(--transicion), box-shadow var(--transicion);
 }
 
 .boton--primario {
-  background: var(--color-acento);
-  color: #1a237e;
+  background: linear-gradient(135deg, var(--color-acento), var(--color-acento-hover));
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(255,111,0,0.30);
 }
 
 .boton--primario:hover {
-  background: var(--color-acento-hover);
+  background: linear-gradient(135deg, var(--color-acento-hover), #bf360c);
   transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(255,111,0,0.38);
 }
 
-.boton--primario:active {
-  transform: translateY(0);
-}
+.boton--primario:active { transform: translateY(0); }
 
-/* --- BADGE CONTADOR --- */
+.boton--full,
+.boton--ancho-completo { width: 100%; }
+
+/* Badge */
 .badge {
   background: var(--color-acento);
-  color: var(--color-primario);
-  font-size: 0.78rem;
+  color: #fff;
+  font-size: 0.75rem;
   font-weight: 700;
   border-radius: 20px;
   padding: 2px 10px;
 }
 
-/* --- MENSAJE VACÍO --- */
+/* Mensaje vacío */
 .mensaje-vacio {
   grid-column: 1 / -1;
   text-align: center;
   color: var(--color-texto-suave);
   font-style: italic;
-  padding: var(--espacio-xl) 0;
+  padding: var(--sp-xl) 0;
   font-size: 0.95rem;
 }
 
-/* --- TOAST NOTIFICACIONES --- */
-.toast {
+/* Toast */
+.notificacion-toast {
   position: fixed;
-  bottom: var(--espacio-lg);
-  right: var(--espacio-lg);
+  bottom: var(--sp-lg);
+  right: var(--sp-lg);
   background: var(--color-primario);
   color: #fff;
-  padding: var(--espacio-sm) var(--espacio-lg);
-  border-radius: var(--radio-base);
+  padding: var(--sp-sm) var(--sp-lg);
+  border-radius: var(--radio-md);
   font-size: 0.9rem;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--sombra-lg);
   z-index: 300;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 320px;
 }
 
-.toast.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.toast.exito {
-  background: var(--color-exito);
-}
-
-.toast.error {
-  background: var(--color-error);
-}
+.notificacion-toast--visible { opacity: 1; transform: translateY(0); }
+.notificacion-toast--exito   { background: var(--color-exito); }
+.notificacion-toast--error   { background: var(--color-error); }
 
 
 /* ============================================================
-   5. RESPONSIVE — breakpoints
+   7. TARJETA DE RUTA — estilos Shadow DOM
    ============================================================ */
-
-/* Breakpoint 1: Tablets (máximo 900px) */
-@media (max-width: 900px) {
-  .header {
-    padding: var(--espacio-sm) var(--espacio-lg);
-  }
-
-  .header__title {
-    font-size: 1.1rem;
-  }
-
-  .main {
-    padding: var(--espacio-lg) var(--espacio-md);
-  }
-
-  .rutas-grid {
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: var(--espacio-md);
-  }
-}
-
-/* Breakpoint 2: Móviles grandes (máximo 600px) */
-@media (max-width: 600px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--espacio-sm);
-    padding: var(--espacio-sm) var(--espacio-md);
-  }
-
-  .header__clima {
-    width: 100%;
-    justify-content: flex-start;
-  }
-
-  .rutas-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal__contenido {
-    margin: 0 var(--espacio-md);
-    padding: var(--espacio-md);
-  }
-
-  .seccion {
-    padding: var(--espacio-md);
-  }
-}
-
-/* Breakpoint 3: Móviles pequeños (máximo 380px) */
-@media (max-width: 380px) {
-  .header__title {
-    font-size: 0.95rem;
-  }
-
-  .header__icon {
-    font-size: 1.3rem;
-  }
-
-  .seccion__titulo {
-    font-size: 0.98rem;
-  }
-
-  .boton {
-    font-size: 0.88rem;
-    padding: 9px var(--espacio-md);
-  }
-
-  .formulario__input {
-    font-size: 0.88rem;
-  }
-
-  .toast {
-    left: var(--espacio-md);
-    right: var(--espacio-md);
-    bottom: var(--espacio-md);
-    text-align: center;
-  }
-}
-
-
-/* ============================================================
-   5. ROUTE-CARD — estilos del Web Component (Shadow DOM)
-   ============================================================ */
-
-.card {
-  background: #ffffff;
-  border-radius: 12px;
+.tarjeta {
+  background: var(--color-fondo-card, #fff);
+  border-radius: 14px;
   padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  border-left: 5px solid #f9a825;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+  border-top: 4px solid #ff6f00;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.card:hover {
+.tarjeta:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.13);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
-.card__header {
+.tarjeta__encabezado {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 12px;
 }
 
-.card__nombre {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #1a237e;
+.tarjeta__nombre {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0d47a1;
   margin: 0;
 }
 
-.card__acciones {
-  display: flex;
-  gap: 6px;
-}
+.tarjeta__acciones-admin { display: flex; gap: 6px; }
 
-.card__btn {
+.tarjeta__boton {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.1rem;
-  padding: 4px 6px;
+  font-size: 1.05rem;
+  padding: 5px 7px;
   border-radius: 6px;
   transition: background 0.15s;
 }
 
-.card__btn:hover {
-  background: #f0f0f0;
-}
+.tarjeta__boton:hover { background: #f0f4ff; }
 
-.card__detalle {
-  font-size: 0.85rem;
+.tarjeta__boton--danger:hover { background: #fff0f0; }
+
+.tarjeta__detalle {
+  font-size: 0.84rem;
   color: #555;
   margin-bottom: 4px;
 }
 
-.card__detalle span {
-  font-weight: 600;
-  color: #333;
-}
+.tarjeta__detalle span { font-weight: 700; color: #222; }
 
-.card__separador {
+.tarjeta__separador {
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #eef0f6;
   margin: 14px 0 10px;
 }
 
-.card__subtitulo {
-  font-size: 0.8rem;
+.tarjeta__subtitulo {
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #888;
+  letter-spacing: 0.06em;
+  color: #90a0b0;
   margin-bottom: 8px;
 }
 
-.card__lista-estudiantes {
+.tarjeta__lista-estudiantes {
   list-style: none;
   padding: 0;
   margin: 0 0 10px;
@@ -526,47 +707,222 @@ a {
   gap: 5px;
 }
 
-.card__estudiante {
+.tarjeta__item-estudiante {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f5f7ff;
+  background: #f0f4ff;
   border-radius: 6px;
   padding: 6px 10px;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: #333;
 }
 
-.card__btn-eliminar-est {
+.tarjeta__boton-eliminar-est {
   background: none;
   border: none;
   cursor: pointer;
-  color: #e53935;
-  font-size: 0.9rem;
+  color: #c62828;
+  font-size: 0.88rem;
   padding: 0 4px;
+  line-height: 1;
 }
 
-.card__btn-agregar-est {
+.tarjeta__boton-agregar-est {
   background: #e8f5e9;
-  color: #2e7d32;
-  border: none;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 7px 12px;
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   width: 100%;
   margin-top: 4px;
   transition: background 0.15s;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.card__btn-agregar-est:hover {
-  background: #c8e6c9;
-}
+.tarjeta__boton-agregar-est:hover { background: #c8e6c9; }
 
-.card__vacio {
+.tarjeta__sin-estudiantes {
   font-size: 0.82rem;
   color: #aaa;
   font-style: italic;
   margin-bottom: 8px;
 }
+
+/* Ocultar acciones admin en vista profesor */
+.tarjeta__acciones-admin--oculto { display: none !important; }
+
+
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
+.footer {
+  background: var(--color-primario-dark);
+  color: rgba(255,255,255,0.85);
+  padding: var(--sp-lg) var(--sp-xl);
+  margin-top: auto;
+}
+
+.footer__contenido {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+.footer__dev {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+}
+
+.footer__nombre {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.footer__programa {
+  font-size: 0.78rem;
+  opacity: 0.65;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+.footer__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-acento);
+  background: rgba(255,111,0,0.12);
+  border: 1px solid rgba(255,111,0,0.3);
+  border-radius: var(--radio-sm);
+  padding: 6px 12px;
+  transition: background var(--transicion), color var(--transicion);
+}
+
+.footer__link:hover {
+  background: var(--color-acento);
+  color: #fff;
+}
+
+.footer__copy {
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+
+/* ============================================================
+   9. RESPONSIVE
+   ============================================================ */
+
+/* Breakpoint 1 — Tablets (≤ 900px) */
+@media (max-width: 900px) {
+  .header { padding: var(--sp-sm) var(--sp-lg); }
+
+  .main { padding: var(--sp-lg) var(--sp-md); gap: var(--sp-lg); }
+
+  .formulario--horizontal {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .formulario--horizontal .boton--submit {
+    grid-column: 1 / -1;
+  }
+
+  .rutas-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  .header__centro { display: none; }
+}
+
+/* Breakpoint 2 — Móviles grandes (≤ 600px) */
+@media (max-width: 600px) {
+  .header {
+    flex-wrap: wrap;
+    padding: var(--sp-sm) var(--sp-md);
+    gap: var(--sp-sm);
+  }
+
+  .header__usuario { width: 100%; justify-content: flex-end; }
+
+  .formulario--horizontal { grid-template-columns: 1fr; }
+
+  .rutas-grid { grid-template-columns: 1fr; }
+
+  .modal__contenido { padding: var(--sp-md); }
+
+  .footer__contenido { flex-direction: column; align-items: flex-start; }
+
+  .login-card { padding: var(--sp-lg) var(--sp-md); }
+}
+
+/* Breakpoint 3 — Móviles pequeños (≤ 380px) */
+@media (max-width: 380px) {
+  .header__empresa   { font-size: 0.88rem; }
+  .header__subtitulo { display: none; }
+  .header__logo      { width: 38px; height: 38px; }
+  .header__logo-icono { font-size: 1.3rem; }
+
+  .login-brand__nombre { font-size: 1.15rem; }
+  .login-roles { flex-direction: column; }
+
+  .boton { font-size: 0.88rem; padding: 9px var(--sp-md); }
+  .formulario__input, .formulario__campo { font-size: 0.88rem; }
+
+  .notificacion-toast {
+    left: var(--sp-md);
+    right: var(--sp-md);
+    bottom: var(--sp-md);
+    text-align: center;
+  }
+
+  .footer__links { flex-direction: column; align-items: flex-start; }
+}
+
+/* ── Ajustes de nombres renombrados ── */
+.encabezado__insignia-rol--profesor {
+  background: #43a047;
+}
+
+.notificacion-toast {
+  position: fixed;
+  bottom: var(--sp-lg);
+  right: var(--sp-lg);
+  background: var(--color-primario);
+  color: #fff;
+  padding: var(--sp-sm) var(--sp-lg);
+  border-radius: var(--radio-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--sombra-lg);
+  z-index: 300;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 320px;
+}
+
+.notificacion-toast--visible { opacity: 1; transform: translateY(0); }
+.notificacion-toast--exito   { background: var(--color-exito); }
+.notificacion-toast--error   { background: var(--color-error); }

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Panel de gestión — KidGo" />
+    <title>Panel · KidGo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <!-- ═══════════════════════════════════════
+         ENCABEZADO
+    ═══════════════════════════════════════ -->
+    <header class="header">
+
+      <!-- Marca / Logo -->
+      <div class="header__brand">
+        <div class="header__logo">
+          <img src="imagenes/logo.png" alt="Logo KidGo" />
+        </div>
+        <div class="header__texto">
+          <span class="header__empresa">KidGo</span>
+          <span class="header__subtitulo">Transporte Escolar</span>
+        </div>
+      </div>
+
+      <!-- Clima (centro) -->
+      <div class="header__centro">
+        <div class="header__clima">
+          <span class="clima__icono" id="clima-icono">🌤️</span>
+          <div class="clima__info">
+            <span class="clima__ciudad">Girón, Colombia</span>
+            <span class="clima__temp" id="clima-temperatura">Cargando...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sesión activa -->
+      <div class="header__usuario">
+        <span class="header__rol-badge" id="insignia-rol">—</span>
+        <button class="boton boton--logout" id="boton-cerrar-sesion">Salir 🚪</button>
+      </div>
+
+    </header>
+
+    <!-- ═══════════════════════════════════════
+         CONTENIDO PRINCIPAL
+    ═══════════════════════════════════════ -->
+    <main class="main">
+
+      <!-- ── Vista del Administrador ── -->
+      <div id="vista-administrador" hidden>
+
+        <div class="bienvenida">
+          <h2 class="bienvenida__titulo">Panel de Administración</h2>
+          <p class="bienvenida__texto">Gestiona las rutas escolares y asigna conductores.</p>
+        </div>
+
+        <!-- Formulario para crear una nueva ruta -->
+        <section class="seccion">
+          <h2 class="seccion__titulo">➕ Nueva Ruta</h2>
+          <form class="formulario formulario--horizontal" id="formulario-nueva-ruta" novalidate>
+            <div class="formulario__grupo">
+              <label class="formulario__etiqueta" for="campo-nombre-ruta">Nombre de la ruta</label>
+              <input class="formulario__campo" type="text" id="campo-nombre-ruta"
+                placeholder="Ej: Ruta Norte" />
+              <span class="formulario__error" id="error-nombre-ruta"></span>
+            </div>
+            <div class="formulario__grupo">
+              <label class="formulario__etiqueta" for="campo-conductor">Conductor</label>
+              <input class="formulario__campo" type="text" id="campo-conductor"
+                placeholder="Nombre del conductor" />
+              <span class="formulario__error" id="error-conductor"></span>
+            </div>
+            <div class="formulario__grupo">
+              <label class="formulario__etiqueta" for="campo-hora">Hora de salida</label>
+              <input class="formulario__campo" type="time" id="campo-hora" />
+              <span class="formulario__error" id="error-hora"></span>
+            </div>
+            <button class="boton boton--primario boton--submit" type="submit">
+              ➕ Agregar Ruta
+            </button>
+          </form>
+        </section>
+
+        <!-- Listado de rutas activas -->
+        <section class="seccion">
+          <h2 class="seccion__titulo">
+            🚌 Rutas Activas
+            <span class="badge" id="contador-rutas-admin">0</span>
+          </h2>
+          <div class="rutas-grid" id="cuadricula-rutas-admin">
+            <p class="mensaje-vacio" id="mensaje-vacio-admin">
+              No hay rutas registradas. ¡Agrega la primera!
+            </p>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ── Vista del Profesor ── -->
+      <div id="vista-profesor" hidden>
+
+        <div class="bienvenida">
+          <h2 class="bienvenida__titulo">Panel del Profesor</h2>
+          <p class="bienvenida__texto">Consulta las rutas y asigna estudiantes a cada bus.</p>
+        </div>
+
+        <section class="seccion">
+          <h2 class="seccion__titulo">
+            🚌 Rutas Disponibles
+            <span class="badge" id="contador-rutas-profesor">0</span>
+          </h2>
+          <div class="rutas-grid" id="cuadricula-rutas-profesor">
+            <p class="mensaje-vacio" id="mensaje-vacio-profesor">
+              El administrador aún no ha registrado rutas.
+            </p>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════
+         PIE DE PÁGINA
+    ═══════════════════════════════════════ -->
+    <footer class="footer">
+      <div class="footer__contenido">
+
+        <div class="footer__dev">
+          <span class="footer__label">Desarrollado por</span>
+          <strong class="footer__nombre">John Faver Calderón Barragán</strong>
+          <span class="footer__programa">
+            Software &amp; Programacion · Campuslands · Girón, Colombia
+          </span>
+        </div>
+
+        <div class="footer__links">
+          <a class="footer__link" href="https://github.com/Johncalderonb"
+            target="_blank" rel="noopener noreferrer">
+            ⌥ GitHub
+          </a>
+          <span class="footer__copy">© 2026 · Todos los derechos reservados</span>
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════
+         MODAL — Editar Ruta
+    ═══════════════════════════════════════ -->
+    <div class="modal" id="modal-editar-ruta" hidden>
+      <div class="modal__contenido">
+        <button class="modal__cerrar" id="cerrar-modal-editar" aria-label="Cerrar">✕</button>
+        <h2 class="modal__titulo">✏️ Editar Ruta</h2>
+        <form class="formulario" id="formulario-editar-ruta" novalidate>
+          <input type="hidden" id="campo-id-editar" />
+          <div class="formulario__grupo">
+            <label class="formulario__etiqueta" for="campo-nombre-editar">Nombre de la ruta</label>
+            <input class="formulario__campo" type="text" id="campo-nombre-editar" />
+            <span class="formulario__error" id="error-nombre-editar"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__etiqueta" for="campo-conductor-editar">Conductor</label>
+            <input class="formulario__campo" type="text" id="campo-conductor-editar" />
+            <span class="formulario__error" id="error-conductor-editar"></span>
+          </div>
+          <div class="formulario__grupo">
+            <label class="formulario__etiqueta" for="campo-hora-editar">Hora de salida</label>
+            <input class="formulario__campo" type="time" id="campo-hora-editar" />
+          </div>
+          <button class="boton boton--primario" type="submit">💾 Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         MODAL — Agregar Estudiante
+    ═══════════════════════════════════════ -->
+    <div class="modal" id="modal-agregar-estudiante" hidden>
+      <div class="modal__contenido">
+        <button class="modal__cerrar" id="cerrar-modal-estudiante" aria-label="Cerrar">✕</button>
+        <h2 class="modal__titulo">👦 Agregar Estudiante</h2>
+        <form class="formulario" id="formulario-agregar-estudiante" novalidate>
+          <input type="hidden" id="campo-id-ruta-estudiante" />
+          <div class="formulario__grupo">
+            <label class="formulario__etiqueta" for="campo-nombre-estudiante">
+              Nombre del estudiante
+            </label>
+            <input class="formulario__campo" type="text" id="campo-nombre-estudiante"
+              placeholder="Nombre completo" />
+            <span class="formulario__error" id="error-nombre-estudiante"></span>
+          </div>
+          <button class="boton boton--primario" type="submit">➕ Agregar Estudiante</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         TEMPLATE — Tarjeta de Ruta (Web Component)
+    ═══════════════════════════════════════ -->
+    <template id="plantilla-tarjeta-ruta">
+      <link rel="stylesheet" href="styles.css" />
+      <div class="tarjeta">
+        <div class="tarjeta__encabezado">
+          <h3 class="tarjeta__nombre" id="tarjeta-nombre">—</h3>
+          <div class="tarjeta__acciones-admin" id="tarjeta-acciones-admin">
+            <button class="tarjeta__boton" id="boton-editar-tarjeta" title="Editar ruta">✏️</button>
+            <button class="tarjeta__boton tarjeta__boton--peligro" id="boton-eliminar-tarjeta"
+              title="Eliminar ruta">🗑️</button>
+          </div>
+        </div>
+        <p class="tarjeta__detalle">🚗 Conductor: <span id="tarjeta-conductor">—</span></p>
+        <p class="tarjeta__detalle">🕐 Hora de salida: <span id="tarjeta-hora">—</span></p>
+        <hr class="tarjeta__separador" />
+        <p class="tarjeta__subtitulo">Estudiantes (<span id="tarjeta-contador">0</span>)</p>
+        <ul class="tarjeta__lista-estudiantes" id="tarjeta-lista-estudiantes"></ul>
+        <p class="tarjeta__sin-estudiantes" id="tarjeta-sin-estudiantes" hidden>
+          Sin estudiantes asignados.
+        </p>
+        <button class="tarjeta__boton-agregar-estudiante" id="boton-agregar-estudiante">
+          + Agregar estudiante
+        </button>
+      </div>
+    </template>
+
+    <!--
+      Orden de carga:
+      1. almacenamiento  → lee/guarda rutas en LocalStorage
+      2. autenticacion   → verifica sesión, redirige si no es válida
+      3. formularios     → validación de campos
+      4. notificaciones  → mensajes toast de feedback
+      5. eventos-rutas   → CustomEvent bus + nombres de eventos
+      6. clima           → consulta la API Open-Meteo
+      7. tarjeta-ruta    → Web Component <tarjeta-ruta>
+      8. panel           → lógica principal del panel
+    -->
+    <script src="almacenamiento.js"></script>
+    <script src="autenticacion.js"></script>
+    <script src="formularios.js"></script>
+    <script src="notificaciones.js"></script>
+    <script src="eventos-rutas.js"></script>
+    <script src="clima.js"></script>
+    <script src="tarjeta-ruta.js"></script>
+    <script src="panel.js"></script>
+
+  </body>
+</html>
