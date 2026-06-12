@@ -9,6 +9,8 @@
   </head>
   <body>
 
+    <div class="app">
+
     <!-- ═══════════════════════════════════════
          ENCABEZADO
     ═══════════════════════════════════════ -->
@@ -57,31 +59,59 @@
           <p class="bienvenida__texto">Gestiona las rutas escolares y asigna conductores.</p>
         </div>
 
-        <!-- Formulario para crear una nueva ruta -->
-        <section class="seccion">
-          <h2 class="seccion__titulo">➕ Nueva Ruta</h2>
-          <form class="formulario formulario--horizontal" id="formulario-nueva-ruta" novalidate>
-            <div class="formulario__grupo">
-              <label class="formulario__etiqueta" for="campo-nombre-ruta">Nombre de la ruta</label>
-              <input class="formulario__campo" type="text" id="campo-nombre-ruta"
-                placeholder="Ej: Ruta Norte" />
-              <span class="formulario__error" id="error-nombre-ruta"></span>
+        <!-- Sección: logo empresa + formulario nueva ruta -->
+        <section class="seccion seccion--dos-columnas">
+
+          <!-- Columna izquierda: identidad de la empresa -->
+          <div class="seccion__identidad">
+            <div class="empresa-logo">
+              <!--
+                Reemplaza la imagen por tu logo:
+                <img src="imagenes/logo.png" alt="Logo KidGo" class="empresa-logo__img" />
+              -->
+              <img src="imagenes/logo.png" alt="Logo KidGo" class="empresa-logo__img" />
             </div>
-            <div class="formulario__grupo">
-              <label class="formulario__etiqueta" for="campo-conductor">Conductor</label>
-              <input class="formulario__campo" type="text" id="campo-conductor"
-                placeholder="Nombre del conductor" />
-              <span class="formulario__error" id="error-conductor"></span>
+            <h3 class="empresa-logo__nombre">KidGo</h3>
+            <p class="empresa-logo__slogan">Transporte Escolar Seguro</p>
+            <div class="empresa-logo__stats">
+              <div class="stat">
+                <span class="stat__numero" id="stat-rutas">0</span>
+                <span class="stat__label">Rutas activas</span>
+              </div>
+              <div class="stat">
+                <span class="stat__numero" id="stat-conductores">0</span>
+                <span class="stat__label">Conductores</span>
+              </div>
             </div>
-            <div class="formulario__grupo">
-              <label class="formulario__etiqueta" for="campo-hora">Hora de salida</label>
-              <input class="formulario__campo" type="time" id="campo-hora" />
-              <span class="formulario__error" id="error-hora"></span>
-            </div>
-            <button class="boton boton--primario boton--submit" type="submit">
-              ➕ Agregar Ruta
-            </button>
-          </form>
+          </div>
+
+          <!-- Columna derecha: formulario -->
+          <div class="seccion__formulario">
+            <h2 class="seccion__titulo">➕ Nueva Ruta</h2>
+            <form class="formulario" id="formulario-nueva-ruta" novalidate>
+              <div class="formulario__grupo">
+                <label class="formulario__etiqueta" for="campo-nombre-ruta">Nombre de la ruta</label>
+                <input class="formulario__campo" type="text" id="campo-nombre-ruta"
+                  placeholder="Ej: Ruta Norte" />
+                <span class="formulario__error" id="error-nombre-ruta"></span>
+              </div>
+              <div class="formulario__grupo">
+                <label class="formulario__etiqueta" for="campo-conductor">Conductor</label>
+                <input class="formulario__campo" type="text" id="campo-conductor"
+                  placeholder="Nombre del conductor" />
+                <span class="formulario__error" id="error-conductor"></span>
+              </div>
+              <div class="formulario__grupo">
+                <label class="formulario__etiqueta" for="campo-hora">Hora de salida</label>
+                <input class="formulario__campo" type="time" id="campo-hora" />
+                <span class="formulario__error" id="error-hora"></span>
+              </div>
+              <button class="boton boton--primario" type="submit">
+                ➕ Agregar Ruta
+              </button>
+            </form>
+          </div>
+
         </section>
 
         <!-- Listado de rutas activas -->
@@ -140,7 +170,7 @@
         <div class="footer__links">
           <a class="footer__link" href="https://github.com/Johncalderonb"
             target="_blank" rel="noopener noreferrer">
-            ⌥ GitHub
+            GitHub
           </a>
           <span class="footer__copy">© 2026 · Todos los derechos reservados</span>
         </div>
@@ -237,6 +267,8 @@
       7. tarjeta-ruta    → Web Component <tarjeta-ruta>
       8. panel           → lógica principal del panel
     -->
+    </div>
+
     <script src="almacenamiento.js"></script>
     <script src="autenticacion.js"></script>
     <script src="formularios.js"></script>

@@ -50,6 +50,13 @@ function quitarEstudianteDeRuta(idRuta, posicion) {
 
 // ── Renderizado ───────────────────────────────────────────
 
+function actualizarStats() {
+  var statRutas = document.getElementById("stat-rutas");
+  var statConductores = document.getElementById("stat-conductores");
+  if (statRutas) statRutas.textContent = listaRutas.length;
+  if (statConductores) statConductores.textContent = listaRutas.length;
+}
+
 function pintarRutasAdmin() {
   var cuadricula = document.getElementById("cuadricula-rutas-admin");
   var vacio      = document.getElementById("mensaje-vacio-admin");
@@ -57,6 +64,7 @@ function pintarRutasAdmin() {
 
   cuadricula.innerHTML = "";
   contador.textContent = listaRutas.length;
+  actualizarStats();
 
   if (listaRutas.length === 0) {
     cuadricula.appendChild(vacio);
