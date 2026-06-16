@@ -5,7 +5,7 @@
 var CLAVE_SESION = "rsk_sesion";
 var CLAVE_RUTAS  = "rsk_rutas";
 
-// ── Sesión ────────────────────────────────────────────────
+// Sesión 
 
 function guardarSesion(usuario) {
   localStorage.setItem(CLAVE_SESION, JSON.stringify(usuario));
@@ -24,7 +24,7 @@ function haySesionActiva() {
   return leerSesion() !== null;
 }
 
-// ── Rutas ─────────────────────────────────────────────────
+// Rutas 
 
 function guardarRutas(listaRutas) {
   localStorage.setItem(CLAVE_RUTAS, JSON.stringify(listaRutas));

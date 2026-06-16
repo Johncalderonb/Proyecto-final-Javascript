@@ -1,17 +1,12 @@
-# 🚌 Rutas Seguras Kids
+# 🚌 KidGo — Rutas Seguras Kids
 
-> Sistema frontend de gestión de transporte escolar con autenticación por roles y persistencia en LocalStorage.
-
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![Sin frameworks](https://img.shields.io/badge/Vanilla_JS-sin_frameworks-orange?style=flat)
+> Sistema frontend de gestión de transporte escolar con autenticación por roles, persistencia en LocalStorage y consumo de API pública.
 
 ---
 
 ## 📋 Descripción
 
-**Rutas Seguras Kids** es una aplicación web desarrollada con HTML, CSS y JavaScript puro (Vanilla JS), sin librerías ni frameworks externos. Permite a una empresa de transporte escolar gestionar rutas, conductores y estudiantes a través de dos roles con acceso diferenciado.
+**KidGo** es una aplicación web desarrollada con HTML, CSS y JavaScript puro (Vanilla JS), sin librerías ni frameworks externos. Permite a una empresa de transporte escolar gestionar rutas, conductores y estudiantes a través de dos roles con acceso diferenciado.
 
 | Rol | Acceso |
 |---|---|
@@ -23,48 +18,44 @@
 ## ✨ Características
 
 - 🔐 Login con selección de rol y verificación de credenciales
-- 💾 Persistencia de datos en **LocalStorage** (las rutas se mantienen al recargar)
+- 💾 Persistencia en **LocalStorage** — rutas y sesión se mantienen al recargar la página
 - 🚌 CRUD completo de rutas: crear, editar y eliminar
 - 👦 Asignación y eliminación de estudiantes por ruta
 - 🌤️ Clima en tiempo real con la API pública **Open-Meteo** (sin API key)
 - 🧩 Web Component `<tarjeta-ruta>` con `<template>` y **Shadow DOM**
 - 📡 Comunicación entre componentes mediante **CustomEvent**
-- 📱 Diseño responsive con 3 breakpoints (900px / 600px / 380px)
+- 📊 Panel de identidad de empresa con contadores de rutas en tiempo real
 - 🔔 Notificaciones toast de feedback al usuario
+- 📱 Diseño responsive con 3 breakpoints (900px / 600px / 380px)
+- 🔒 Protección de página: redirige al login si no hay sesión activa
+- 🖼️ Soporte para logo de empresa en login y encabezado
 
 ---
 
 ## 🗂️ Estructura del proyecto
 
 ```
-rutas-seguras-kids/
+KidGo/
 │
-├── index.html                    # Página de inicio de sesión
+├── index.html              # Página de inicio de sesión
+├── panel.html              # Panel principal (protegido — requiere sesión activa)
+├── styles.css              # Estilos completos del proyecto
 ├── README.md
 ├── .gitignore
 │
-├── paginas/
-│   └── panel.html                # Panel principal (solo accesible con sesión activa)
+├── imagenes/               # Logo e imágenes de la empresa
+│   └── logo.png            # Logo (reemplazar con el logo real)
 │
-├── assets/
-│   └── imagenes/                 # Logo e imágenes de la empresa
-│
-├── docs/                         # Capturas de pantalla y documentación adicional
-│
-└── src/
-    ├── css/
-    │   └── estilos.css           # Estilos completos del proyecto
-    │
-    └── js/
-        ├── almacenamiento.js     # Lee y guarda datos en LocalStorage
-        ├── autenticacion.js      # Usuarios, roles y protección de páginas
-        ├── formularios.js        # Validación de campos de formularios
-        ├── notificaciones.js     # Mensajes toast de feedback al usuario
-        ├── eventos-rutas.js      # Canal de comunicación entre componentes (CustomEvent)
-        ├── clima.js              # Consulta la API de clima Open-Meteo
-        ├── tarjeta-ruta.js       # Web Component <tarjeta-ruta> con Shadow DOM
-        ├── inicio-sesion.js      # Lógica del formulario de login
-        └── panel.js              # Lógica principal del panel de gestión
+└── js/
+    ├── almacenamiento.js   # Lee y guarda sesión y rutas en LocalStorage
+    ├── autenticacion.js    # Usuarios, roles y protección de páginas
+    ├── formularios.js      # Validación de campos de formularios
+    ├── notificaciones.js   # Mensajes toast de feedback al usuario
+    ├── eventos-rutas.js    # Canal de comunicación entre componentes (CustomEvent)
+    ├── clima.js            # Consulta la API de clima Open-Meteo (fetch + async/await)
+    ├── tarjeta-ruta.js     # Web Component <tarjeta-ruta> con Shadow DOM
+    ├── inicio-sesion.js    # Lógica del formulario de login
+    └── panel.js            # Lógica principal del panel (estado, modales, renderizado)
 ```
 
 ---
@@ -76,9 +67,9 @@ rutas-seguras-kids/
 2. Click derecho en `index.html` → **Open with Live Server**.
 
 **Opción 2 — Directo en el navegador:**
-1. Abre el archivo `index.html`.
+1. Abre `index.html` con doble clic.
 
-> No requiere Node.js ni instalación de dependencias.
+> No requiere Node.js, npm ni instalación de dependencias.
 
 ---
 
@@ -89,34 +80,60 @@ rutas-seguras-kids/
 | Administrador | `admin` | `admin123` |
 | Profesor | `profesor` | `profe456` |
 
+> Las credenciales están definidas en `autenticacion.js` y pueden modificarse directamente en el arreglo `USUARIOS_DEL_SISTEMA`.
+
 ---
 
 ## 🌐 API utilizada
 
 | API | Uso | Autenticación |
 |---|---|---|
-| [Open-Meteo](https://open-meteo.com) | Clima actual | Sin API key |
+| [Open-Meteo](https://open-meteo.com) | Temperatura y condición climática actual | Sin API key |
+
+Coordenadas configuradas para **Girón, Santander, Colombia** (`lat: 7.07`, `lon: -73.11`).
+Para cambiar la ciudad, edita las constantes `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`.
+
+---
+
+## 🖼️ Colocar el logo de la empresa
+
+1. Guarda tu logo en la carpeta `imagenes/` con el nombre `logo.png`.
+2. Ya está referenciado en `index.html` y `panel.html` — no requiere cambios de código.
+3. Formatos soportados: `.png`, `.jpg`, `.svg` (cambia la extensión en el `src` si usas otro formato).
 
 ---
 
 ## 🎓 Conceptos aplicados
 
-| Concepto | Dónde se aplica |
+| Concepto | Archivo |
 |---|---|
-| Manipulación del DOM | `panel.js` — renderizado dinámico de tarjetas |
-| Validación de formularios | `formularios.js` — usado en login y panel |
-| Asincronía (fetch + async/await) | `clima.js` |
-| Web Components + Shadow DOM | `tarjeta-ruta.js` |
-| CustomEvent (eventos personalizados) | `eventos-rutas.js` |
-| LocalStorage | `almacenamiento.js` |
+| Manipulación dinámica del DOM | `panel.js`, `tarjeta-ruta.js` |
+| Validación de formularios | `formularios.js` |
+| Asincronía — `fetch` + `async/await` | `clima.js` |
+| Web Components + `<template>` + Shadow DOM | `tarjeta-ruta.js` |
+| CustomEvent — bus de eventos personalizado | `eventos-rutas.js` |
+| LocalStorage — persistencia de datos | `almacenamiento.js` |
 | Control de acceso por roles | `autenticacion.js` |
-| Diseño responsive | `estilos.css` — 3 breakpoints |
+| Diseño responsive — 3 breakpoints `@media` | `styles.css` |
+| Footer fijo al fondo con Flexbox | `styles.css` — `.app`, `.main` |
+
+---
+
+## 📸 Capturas de pantalla
+
+> Agrega tus capturas en la carpeta `docs/` y enlázalas aquí:
+
+```markdown
+![Login](docs/captura-login.png)
+![Panel Admin](docs/captura-admin.png)
+![Panel Profesor](docs/captura-profesor.png)
+```
 
 ---
 
 ## 👨‍💻 Autor
 
 **John Faver Calderón Barragán**
-Software & AI Programming — Campuslands, Girón, Santander, Colombia
+Software & Programacion — Campuslands · Girón, Santander, Colombia
 
-[![GitHub](https://img.shields.io/badge/GitHub-JohnFaverCB-181717?style=flat&logo=github)](https://github.com/JohnFaverCB)
+[![GitHub](https://img.shields.io/badge/GitHub-Johncalderonb-181717?style=flat&logo=github)](https://github.com/Johncalderonb)
