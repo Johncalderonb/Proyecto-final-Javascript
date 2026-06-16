@@ -130,7 +130,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 🔐 Inicio de sesión — Administrador
 
 <p align="center">
-  <img src="imagenes/inicio_de_sesion_admin.png" width="700" alt="Inicio de sesión Administrador" />
+  <img src="Imagenes/inicio_de_sesion_admin.png" width="700" alt="Inicio de sesión Administrador" />
   <br/>
   <em>Pantalla de login con rol Administrador seleccionado</em>
 </p>
@@ -140,7 +140,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 🔐 Inicio de sesión — Profesor
 
 <p align="center">
-  <img src="imagenes/inicio_de_sesion_profe.png" width="700" alt="Inicio de sesión Profesor" />
+  <img src="Imagenes/inicio_de_sesion_profe.png" width="700" alt="Inicio de sesión Profesor" />
   <br/>
   <em>Pantalla de login con rol Profesor seleccionado</em>
 </p>
@@ -150,7 +150,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 🛡️ Panel del Administrador
 
 <p align="center">
-  <img src="imagenes/panel_admin.png" width="700" alt="Panel Administrador" />
+  <img src="Imagenes/panel_admin.png" width="700" alt="Panel Administrador" />
   <br/>
   <em>Panel de administración — logo de empresa, contadores y formulario de nueva ruta</em>
 </p>
@@ -160,7 +160,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 📍 Ruta creada
 
 <p align="center">
-  <img src="imagenes/ruta_agregada.png" width="700" alt="Ruta agregada" />
+  <img src="Imagenes/ruta_agregada.png" width="700" alt="Ruta agregada" />
   <br/>
   <em>Vista del administrador con una ruta registrada en el sistema</em>
 </p>
@@ -170,7 +170,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 🗑️ Eliminación de ruta
 
 <p align="center">
-  <img src="imagenes/eliminacion_de_rutas.png" width="700" alt="Eliminación de rutas" />
+  <img src="Imagenes/eliminacion_de_rutas.png" width="700" alt="Eliminación de rutas" />
   <br/>
   <em>Confirmación de eliminación de una ruta activa</em>
 </p>
@@ -180,7 +180,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 👨‍🏫 Panel del Profesor
 
 <p align="center">
-  <img src="imagenes/panel_profe.png" width="700" alt="Panel Profesor" />
+  <img src="Imagenes/panel_profe.png" width="700" alt="Panel Profesor" />
   <br/>
   <em>Panel del profesor — visualización de rutas disponibles</em>
 </p>
@@ -190,7 +190,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### ➕ Agregar estudiante
 
 <p align="center">
-  <img src="imagenes/agregar_estudiante.png" width="700" alt="Agregar estudiante" />
+  <img src="Imagenes/agregar_estudiante.png" width="700" alt="Agregar estudiante" />
   <br/>
   <em>Modal para agregar un estudiante a una ruta disponible</em>
 </p>
@@ -200,7 +200,7 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 ### 👦 Tarjeta con estudiantes asignados
 
 <p align="center">
-  <img src="imagenes/tarjeta_con_estudiantes.png" width="700" alt="Tarjeta con estudiantes" />
+  <img src="Imagenes/tarjeta_con_estudiantes.png" width="700" alt="Tarjeta con estudiantes" />
   <br/>
   <em>Tarjeta de ruta con estudiantes asignados y notificación toast de confirmación</em>
 </p>
