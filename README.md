@@ -2,6 +2,12 @@
 
 > Sistema frontend de gestión de transporte escolar con autenticación por roles, persistencia en LocalStorage y consumo de API pública.
 
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-sin_frameworks-orange?style=flat)
+![LocalStorage](https://img.shields.io/badge/LocalStorage-persistencia-green?style=flat)
+
 ---
 
 ## 📋 Descripción
@@ -43,8 +49,16 @@ KidGo/
 ├── README.md
 ├── .gitignore
 │
-├── imagenes/               # Logo e imágenes de la empresa
-│   └── logo.png            # Logo (reemplazar con el logo real)
+├── imagenes/               # Logo y capturas del proyecto
+│   ├── logo.png
+│   ├── inicio_de_sesion_admin.png
+│   ├── inicio_de_sesion_profe.png
+│   ├── panel_admin.png
+│   ├── panel_profe.png
+│   ├── ruta_agregada.png
+│   ├── eliminacion_de_rutas.png
+│   ├── agregar_estudiante.png
+│   └── tarjeta_con_estudiantes.png
 │
 └── js/
     ├── almacenamiento.js   # Lee y guarda sesión y rutas en LocalStorage
@@ -80,7 +94,7 @@ KidGo/
 | Administrador | `admin` | `admin123` |
 | Profesor | `profesor` | `profe456` |
 
-> Las credenciales están definidas en `autenticacion.js` y pueden modificarse directamente en el arreglo `USUARIOS_DEL_SISTEMA`.
+> Las credenciales están definidas en `autenticacion.js` en el arreglo `USUARIOS_DEL_SISTEMA`.
 
 ---
 
@@ -91,15 +105,7 @@ KidGo/
 | [Open-Meteo](https://open-meteo.com) | Temperatura y condición climática actual | Sin API key |
 
 Coordenadas configuradas para **Girón, Santander, Colombia** (`lat: 7.07`, `lon: -73.11`).
-Para cambiar la ciudad, edita las constantes `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`.
-
----
-
-## 🖼️ Colocar el logo de la empresa
-
-1. Guarda tu logo en la carpeta `imagenes/` con el nombre `logo.png`.
-2. Ya está referenciado en `index.html` y `panel.html` — no requiere cambios de código.
-3. Formatos soportados: `.png`, `.jpg`, `.svg` (cambia la extensión en el `src` si usas otro formato).
+Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`.
 
 ---
 
@@ -121,13 +127,83 @@ Para cambiar la ciudad, edita las constantes `LATITUD_CIUDAD` y `LONGITUD_CIUDAD
 
 ## 📸 Capturas de pantalla
 
-> Agrega tus capturas en la carpeta `docs/` y enlázalas aquí:
+### 🔐 Inicio de sesión — Administrador
 
-```markdown
-![Login](docs/captura-login.png)
-![Panel Admin](docs/captura-admin.png)
-![Panel Profesor](docs/captura-profesor.png)
-```
+<p align="center">
+  <img src="imagenes/inicio_de_sesion_admin.png" width="700" alt="Inicio de sesión Administrador" />
+  <br/>
+  <em>Pantalla de login con rol Administrador seleccionado</em>
+</p>
+
+---
+
+### 🔐 Inicio de sesión — Profesor
+
+<p align="center">
+  <img src="imagenes/inicio_de_sesion_profe.png" width="700" alt="Inicio de sesión Profesor" />
+  <br/>
+  <em>Pantalla de login con rol Profesor seleccionado</em>
+</p>
+
+---
+
+### 🛡️ Panel del Administrador
+
+<p align="center">
+  <img src="imagenes/panel_admin.png" width="700" alt="Panel Administrador" />
+  <br/>
+  <em>Panel de administración — logo de empresa, contadores y formulario de nueva ruta</em>
+</p>
+
+---
+
+### 📍 Ruta creada
+
+<p align="center">
+  <img src="imagenes/ruta_agregada.png" width="700" alt="Ruta agregada" />
+  <br/>
+  <em>Vista del administrador con una ruta registrada en el sistema</em>
+</p>
+
+---
+
+### 🗑️ Eliminación de ruta
+
+<p align="center">
+  <img src="imagenes/eliminacion_de_rutas.png" width="700" alt="Eliminación de rutas" />
+  <br/>
+  <em>Confirmación de eliminación de una ruta activa</em>
+</p>
+
+---
+
+### 👨‍🏫 Panel del Profesor
+
+<p align="center">
+  <img src="imagenes/panel_profe.png" width="700" alt="Panel Profesor" />
+  <br/>
+  <em>Panel del profesor — visualización de rutas disponibles</em>
+</p>
+
+---
+
+### ➕ Agregar estudiante
+
+<p align="center">
+  <img src="imagenes/agregar_estudiante.png" width="700" alt="Agregar estudiante" />
+  <br/>
+  <em>Modal para agregar un estudiante a una ruta disponible</em>
+</p>
+
+---
+
+### 👦 Tarjeta con estudiantes asignados
+
+<p align="center">
+  <img src="imagenes/tarjeta_con_estudiantes.png" width="700" alt="Tarjeta con estudiantes" />
+  <br/>
+  <em>Tarjeta de ruta con estudiantes asignados y notificación toast de confirmación</em>
+</p>
 
 ---
 
