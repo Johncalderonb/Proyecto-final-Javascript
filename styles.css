@@ -640,9 +640,9 @@ svg     { display: block; }
   max-width: 320px;
 }
 
-.notificacion-notificacion-toast--visible { opacity: 1; transform: translateY(0); }
-.notificacion-notificacion-toast--exito   { background: var(--color-exito); }
-.notificacion-notificacion-toast--error   { background: var(--color-error); }
+.notificacion-toast--visible { opacity: 1; transform: translateY(0); }
+.notificacion-toast--exito   { background: var(--color-exito); }
+.notificacion-toast--error   { background: var(--color-error); }
 
 
 /* ============================================================
@@ -870,8 +870,6 @@ svg     { display: block; }
   }
 
   .rutas-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-
-  .header__centro { display: none; }
 }
 
 /* Breakpoint 2 — Móviles grandes (≤ 600px) */
@@ -919,27 +917,6 @@ svg     { display: block; }
 }
 
 /* ── Ajustes de nombres renombrados ── */
-.encabezado__insignia-rol--profesor {
-  background: #43a047;
-}
-
-.notificacion-toast {
-  position: fixed;
-  bottom: var(--sp-lg);
-  right: var(--sp-lg);
-  background: var(--color-primario);
-  color: #fff;
-  padding: var(--sp-sm) var(--sp-lg);
-  border-radius: var(--radio-md);
-  font-size: 0.9rem;
-  font-weight: 600;
-  box-shadow: var(--sombra-lg);
-  z-index: 300;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  max-width: 320px;
-}
 
 .notificacion-toast--visible { opacity: 1; transform: translateY(0); }
 .notificacion-toast--exito   { background: var(--color-exito); }
@@ -1053,4 +1030,194 @@ svg     { display: block; }
   }
   .empresa-logo { width: 60px; height: 60px; }
   .empresa-logo__stats { width: auto; border: none; padding: 0; }
+}
+
+/* ============================================================
+   10. BUSCADOR — rutas y estudiantes
+   ============================================================ */
+.seccion__encabezado-con-buscador {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-md);
+}
+
+.seccion__encabezado-con-buscador .seccion__titulo {
+  margin-bottom: 0;
+}
+
+.buscador {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  background: var(--color-fondo);
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-md);
+  padding: 8px var(--sp-md);
+  min-width: 260px;
+  transition: border-color var(--transicion), box-shadow var(--transicion);
+}
+
+.buscador:focus-within {
+  border-color: var(--color-primario-light);
+  box-shadow: 0 0 0 3px rgba(25,118,210,0.13);
+  background: #fff;
+}
+
+.buscador__icono {
+  font-size: 0.95rem;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.buscador__campo {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  width: 100%;
+  font-family: inherit;
+}
+
+.buscador__campo::placeholder {
+  color: var(--color-texto-suave);
+}
+
+/* ============================================================
+   11. RESALTADO DE COINCIDENCIAS — buscador en tarjetas
+   ============================================================ */
+.tarjeta__resaltado {
+  background: #fff176;
+  color: #5d4400;
+  padding: 0 2px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   12. ACCIONES DE ESTUDIANTE — editar y eliminar
+   ============================================================ */
+.tarjeta__acciones-estudiante {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.tarjeta__boton-editar-estudiante {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 2px 5px;
+  border-radius: 5px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.tarjeta__boton-editar-estudiante:hover {
+  background: #e3f2fd;
+}
+
+.tarjeta__boton-quitar-estudiante:hover {
+  background: #ffebee;
+  border-radius: 5px;
+}
+
+/* ============================================================
+   13. SELECTOR DE CIUDAD — clima
+   ============================================================ */
+.clima__selector-ciudad {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 0.7rem;
+  opacity: 0.9;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  max-width: 140px;
+}
+
+.clima__selector-ciudad option {
+  color: var(--color-texto);
+  background: #fff;
+}
+
+.clima__selector-ciudad:hover,
+.clima__selector-ciudad:focus {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   14. RESPONSIVE — ajustes adicionales buscador y clima
+   ============================================================ */
+
+/* Tablets (≤ 900px): el clima pasa a una franja propia visible debajo del header */
+@media (max-width: 900px) {
+  .header__centro {
+    display: flex;
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    padding-top: var(--sp-sm);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: var(--sp-sm);
+  }
+
+  .header {
+    flex-wrap: wrap;
+  }
+
+  .header__brand  { order: 1; }
+  .header__usuario { order: 2; }
+
+  .seccion__encabezado-con-buscador {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buscador {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+/* Móviles grandes (≤ 600px) */
+@media (max-width: 600px) {
+  .header__clima {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .clima__selector-ciudad {
+    max-width: 110px;
+  }
+}
+
+/* Móviles pequeños (≤ 380px) */
+@media (max-width: 380px) {
+  .buscador__campo {
+    font-size: 0.82rem;
+  }
+
+  .clima__selector-ciudad {
+    font-size: 0.65rem;
+    max-width: 90px;
+  }
+
+  .clima__temp {
+    font-size: 0.8rem;
+  }
+
+  .tarjeta__boton-editar-estudiante,
+  .tarjeta__boton-quitar-estudiante {
+    font-size: 0.78rem;
+  }
 }

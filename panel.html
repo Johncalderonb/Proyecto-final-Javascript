@@ -27,12 +27,12 @@
         </div>
       </div>
 
-      <!-- Clima (centro) -->
+      <!-- Clima (centro) con selector de ciudad -->
       <div class="header__centro">
         <div class="header__clima">
           <span class="clima__icono" id="clima-icono">🌤️</span>
           <div class="clima__info">
-            <span class="clima__ciudad">Girón, Colombia</span>
+            <select class="clima__selector-ciudad" id="selector-ciudad-clima" title="Cambiar ciudad"></select>
             <span class="clima__temp" id="clima-temperatura">Cargando...</span>
           </div>
         </div>
@@ -65,10 +65,6 @@
           <!-- Columna izquierda: identidad de la empresa -->
           <div class="seccion__identidad">
             <div class="empresa-logo">
-              <!--
-                Reemplaza la imagen por tu logo:
-                <img src="imagenes/logo.png" alt="Logo KidGo" class="empresa-logo__img" />
-              -->
               <img src="imagenes/logo.png" alt="Logo KidGo" class="empresa-logo__img" />
             </div>
             <h3 class="empresa-logo__nombre">KidGo</h3>
@@ -116,10 +112,17 @@
 
         <!-- Listado de rutas activas -->
         <section class="seccion">
-          <h2 class="seccion__titulo">
-            🚌 Rutas Activas
-            <span class="badge" id="contador-rutas-admin">0</span>
-          </h2>
+          <div class="seccion__encabezado-con-buscador">
+            <h2 class="seccion__titulo">
+              🚌 Rutas Activas
+              <span class="badge" id="contador-rutas-admin">0</span>
+            </h2>
+            <div class="buscador">
+              <span class="buscador__icono">🔍</span>
+              <input class="buscador__campo" type="text" id="buscador-admin"
+                placeholder="Buscar ruta, conductor o estudiante..." />
+            </div>
+          </div>
           <div class="rutas-grid" id="cuadricula-rutas-admin">
             <p class="mensaje-vacio" id="mensaje-vacio-admin">
               No hay rutas registradas. ¡Agrega la primera!
@@ -138,10 +141,17 @@
         </div>
 
         <section class="seccion">
-          <h2 class="seccion__titulo">
-            🚌 Rutas Disponibles
-            <span class="badge" id="contador-rutas-profesor">0</span>
-          </h2>
+          <div class="seccion__encabezado-con-buscador">
+            <h2 class="seccion__titulo">
+              🚌 Rutas Disponibles
+              <span class="badge" id="contador-rutas-profesor">0</span>
+            </h2>
+            <div class="buscador">
+              <span class="buscador__icono">🔍</span>
+              <input class="buscador__campo" type="text" id="buscador-profesor"
+                placeholder="Buscar ruta o estudiante..." />
+            </div>
+          </div>
           <div class="rutas-grid" id="cuadricula-rutas-profesor">
             <p class="mensaje-vacio" id="mensaje-vacio-profesor">
               El administrador aún no ha registrado rutas.
@@ -229,6 +239,29 @@
     </div>
 
     <!-- ═══════════════════════════════════════
+         MODAL — Editar Estudiante
+    ═══════════════════════════════════════ -->
+    <div class="modal" id="modal-editar-estudiante" hidden>
+      <div class="modal__contenido">
+        <button class="modal__cerrar" id="cerrar-modal-editar-estudiante" aria-label="Cerrar">✕</button>
+        <h2 class="modal__titulo">✏️ Editar Estudiante</h2>
+        <form class="formulario" id="formulario-editar-estudiante" novalidate>
+          <input type="hidden" id="campo-id-ruta-editar-estudiante" />
+          <input type="hidden" id="campo-posicion-editar-estudiante" />
+          <div class="formulario__grupo">
+            <label class="formulario__etiqueta" for="campo-nombre-editar-estudiante">
+              Nombre del estudiante
+            </label>
+            <input class="formulario__campo" type="text" id="campo-nombre-editar-estudiante"
+              placeholder="Nombre completo" />
+            <span class="formulario__error" id="error-nombre-editar-estudiante"></span>
+          </div>
+          <button class="boton boton--primario" type="submit">💾 Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
          TEMPLATE — Tarjeta de Ruta (Web Component)
     ═══════════════════════════════════════ -->
     <template id="plantilla-tarjeta-ruta">
@@ -263,7 +296,7 @@
       3. formularios     → validación de campos
       4. notificaciones  → mensajes toast de feedback
       5. eventos-rutas   → CustomEvent bus + nombres de eventos
-      6. clima           → consulta la API Open-Meteo
+      6. clima           → consulta la API Open-Meteo + selector de ciudad
       7. tarjeta-ruta    → Web Component <tarjeta-ruta>
       8. panel           → lógica principal del panel
     -->

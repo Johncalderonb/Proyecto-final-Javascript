@@ -17,16 +17,18 @@
 | Rol | Acceso |
 |---|---|
 | 🛡️ **Administrador** | Crear, editar y eliminar rutas; asignar conductores y horarios |
-| 👨‍🏫 **Profesor** | Consultar rutas activas y asignar estudiantes a cada bus |
+| 👨‍🏫 **Profesor** | Consultar rutas activas, agregar, editar y eliminar estudiantes |
 
 ---
 
 ## ✨ Características
 
 - 🔐 Login con selección de rol y verificación de credenciales
-- 💾 Persistencia en **LocalStorage** — rutas y sesión se mantienen al recargar la página
-- 🚌 CRUD completo de rutas: crear, editar y eliminar
-- 👦 Asignación y eliminación de estudiantes por ruta
+- 💾 Persistencia en **LocalStorage** — rutas, sesión y ciudad del clima se mantienen al recargar la página
+- 🚌 CRUD completo de rutas: **crear, editar y eliminar**
+- 👦 CRUD completo de estudiantes: **agregar, editar y eliminar** por ruta
+- 🔍 **Buscador en tiempo real** en ambos paneles, con resaltado visual de coincidencias en rutas, conductores y estudiantes
+- 🌍 **Selector de ciudad** para el clima, editable desde la misma página, con 7 ciudades de Colombia disponibles
 - 🌤️ Clima en tiempo real con la API pública **Open-Meteo** (sin API key)
 - 🧩 Web Component `<tarjeta-ruta>` con `<template>` y **Shadow DOM**
 - 📡 Comunicación entre componentes mediante **CustomEvent**
@@ -44,32 +46,25 @@
 KidGo/
 │
 ├── index.html              # Página de inicio de sesión
-├── panel.html              # Panel principal (protegido — requiere sesión activa)
-├── styles.css              # Estilos completos del proyecto
+├── panel.html               # Panel principal (protegido — requiere sesión activa)
+├── styles.css                # Estilos completos del proyecto
 ├── README.md
 ├── .gitignore
 │
-├── imagenes/               # Logo y capturas del proyecto
+├── imagenes/                 # Logo y capturas del proyecto
 │   ├── logo.png
-│   ├── inicio_de_sesion_admin.png
-│   ├── inicio_de_sesion_profe.png
-│   ├── panel_admin.png
-│   ├── panel_profe.png
-│   ├── ruta_agregada.png
-│   ├── eliminacion_de_rutas.png
-│   ├── agregar_estudiante.png
-│   └── tarjeta_con_estudiantes.png
+│   └── ...capturas
 │
 └── js/
-    ├── almacenamiento.js   # Lee y guarda sesión y rutas en LocalStorage
-    ├── autenticacion.js    # Usuarios, roles y protección de páginas
-    ├── formularios.js      # Validación de campos de formularios
-    ├── notificaciones.js   # Mensajes toast de feedback al usuario
-    ├── eventos-rutas.js    # Canal de comunicación entre componentes (CustomEvent)
-    ├── clima.js            # Consulta la API de clima Open-Meteo (fetch + async/await)
-    ├── tarjeta-ruta.js     # Web Component <tarjeta-ruta> con Shadow DOM
-    ├── inicio-sesion.js    # Lógica del formulario de login
-    └── panel.js            # Lógica principal del panel (estado, modales, renderizado)
+    ├── almacenamiento.js     # Lee y guarda sesión, rutas y ciudad del clima en LocalStorage
+    ├── autenticacion.js      # Usuarios, roles y protección de páginas
+    ├── formularios.js        # Validación de campos de formularios
+    ├── notificaciones.js     # Mensajes toast de feedback al usuario
+    ├── eventos-rutas.js      # Canal de comunicación entre componentes (CustomEvent)
+    ├── clima.js               # Consulta la API Open-Meteo + selector de ciudad
+    ├── tarjeta-ruta.js        # Web Component <tarjeta-ruta> con Shadow DOM
+    ├── inicio-sesion.js       # Lógica del formulario de login
+    └── panel.js               # Lógica principal del panel (estado, modales, búsqueda, renderizado)
 ```
 
 ---
@@ -98,14 +93,57 @@ KidGo/
 
 ---
 
+## 🚌 Gestión de Rutas (Administrador)
+
+| Acción | Cómo se hace |
+|---|---|
+| **Crear** | Llenar el formulario "Nueva Ruta" y hacer clic en Agregar Ruta |
+| **Editar** | Botón ✏️ en la tarjeta de la ruta — abre un modal con los datos actuales |
+| **Eliminar** | Botón 🗑️ en la tarjeta de la ruta — pide confirmación antes de borrar |
+
+Los cambios se guardan automáticamente en LocalStorage y se reflejan al instante en pantalla mediante el sistema de CustomEvent.
+
+---
+
+## 👦 Gestión de Estudiantes (Profesor)
+
+| Acción | Cómo se hace |
+|---|---|
+| **Agregar** | Botón "+ Agregar estudiante" dentro de la tarjeta de cada ruta |
+| **Editar** | Botón ✏️ junto al nombre del estudiante en la lista — abre un modal para corregir el nombre |
+| **Eliminar** | Botón ✕ junto al nombre del estudiante — lo quita de la ruta de inmediato |
+
+---
+
+## 🔍 Buscador con resaltado
+
+Tanto el panel del Administrador como el del Profesor incluyen un campo de búsqueda en tiempo real sobre la sección de rutas.
+
+- Busca coincidencias en el **nombre de la ruta**, el **conductor** y los **nombres de los estudiantes**.
+- Las coincidencias se resaltan visualmente con fondo amarillo (`<mark>`) dentro de cada tarjeta.
+- Si no hay resultados, se muestra un mensaje indicando que no se encontraron coincidencias.
+- La búsqueda no distingue mayúsculas ni minúsculas.
+
+---
+
+## 🌍 Selector de ciudad del clima
+
+El clima mostrado en el encabezado ahora es configurable directamente desde la página, sin tocar el código.
+
+- Un selector desplegable junto al ícono del clima permite elegir entre 7 ciudades de Colombia: Girón, Bogotá, Medellín, Cali, Bucaramanga, Cartagena y Barranquilla.
+- La ciudad elegida se guarda en LocalStorage (clave `rsk_ciudad_clima`) y se recuerda en la próxima visita.
+- Al cambiar de ciudad, el clima se actualiza automáticamente sin recargar la página.
+- El selector es responsive: se reubica debajo del encabezado en tablets y reduce su tamaño en móviles pequeños para mantenerse siempre visible y utilizable.
+
+---
+
 ## 🌐 API utilizada
 
 | API | Uso | Autenticación |
 |---|---|---|
-| [Open-Meteo](https://open-meteo.com) | Temperatura y condición climática actual | Sin API key |
+| [Open-Meteo](https://open-meteo.com) | Temperatura y condición climática actual de la ciudad elegida | Sin API key |
 
-Coordenadas configuradas para **Girón, Santander, Colombia** (`lat: 7.07`, `lon: -73.11`).
-Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`.
+Para agregar una nueva ciudad al selector, edita el arreglo `CIUDADES_DISPONIBLES` en `clima.js` con su nombre, latitud y longitud.
 
 ---
 
@@ -118,8 +156,9 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 | Asincronía — `fetch` + `async/await` | `clima.js` |
 | Web Components + `<template>` + Shadow DOM | `tarjeta-ruta.js` |
 | CustomEvent — bus de eventos personalizado | `eventos-rutas.js` |
-| LocalStorage — persistencia de datos | `almacenamiento.js` |
+| LocalStorage — persistencia de datos | `almacenamiento.js`, `clima.js` |
 | Control de acceso por roles | `autenticacion.js` |
+| Búsqueda y resaltado dinámico | `panel.js`, `tarjeta-ruta.js` |
 | Diseño responsive — 3 breakpoints `@media` | `styles.css` |
 | Footer fijo al fondo con Flexbox | `styles.css` — `.app`, `.main` |
 
@@ -127,82 +166,28 @@ Para cambiar la ciudad, edita `LATITUD_CIUDAD` y `LONGITUD_CIUDAD` en `clima.js`
 
 ## 📸 Capturas de pantalla
 
-### 🔐 Inicio de sesión — Administrador
-
 <p align="center">
-  <img src="Imagenes/inicio_de_sesion_admin.png" width="700" alt="Inicio de sesión Administrador" />
+  <img src="imagenes/inicio_de_sesion_admin.png" width="700" alt="Inicio de sesión Administrador" />
   <br/>
   <em>Pantalla de login con rol Administrador seleccionado</em>
 </p>
 
----
-
-### 🔐 Inicio de sesión — Profesor
-
 <p align="center">
-  <img src="Imagenes/inicio_de_sesion_profe.png" width="700" alt="Inicio de sesión Profesor" />
-  <br/>
-  <em>Pantalla de login con rol Profesor seleccionado</em>
-</p>
-
----
-
-### 🛡️ Panel del Administrador
-
-<p align="center">
-  <img src="Imagenes/panel_admin.png" width="700" alt="Panel Administrador" />
+  <img src="imagenes/panel_admin.png" width="700" alt="Panel Administrador" />
   <br/>
   <em>Panel de administración — logo de empresa, contadores y formulario de nueva ruta</em>
 </p>
 
----
-
-### 📍 Ruta creada
-
 <p align="center">
-  <img src="Imagenes/ruta_agregada.png" width="700" alt="Ruta agregada" />
-  <br/>
-  <em>Vista del administrador con una ruta registrada en el sistema</em>
-</p>
-
----
-
-### 🗑️ Eliminación de ruta
-
-<p align="center">
-  <img src="Imagenes/eliminacion_de_rutas.png" width="700" alt="Eliminación de rutas" />
-  <br/>
-  <em>Confirmación de eliminación de una ruta activa</em>
-</p>
-
----
-
-### 👨‍🏫 Panel del Profesor
-
-<p align="center">
-  <img src="Imagenes/panel_profe.png" width="700" alt="Panel Profesor" />
+  <img src="imagenes/panel_profe.png" width="700" alt="Panel Profesor" />
   <br/>
   <em>Panel del profesor — visualización de rutas disponibles</em>
 </p>
 
----
-
-### ➕ Agregar estudiante
-
 <p align="center">
-  <img src="Imagenes/agregar_estudiante.png" width="700" alt="Agregar estudiante" />
+  <img src="imagenes/tarjeta_con_estudiantes.png" width="700" alt="Tarjeta con estudiantes" />
   <br/>
-  <em>Modal para agregar un estudiante a una ruta disponible</em>
-</p>
-
----
-
-### 👦 Tarjeta con estudiantes asignados
-
-<p align="center">
-  <img src="Imagenes/tarjeta_con_estudiantes.png" width="700" alt="Tarjeta con estudiantes" />
-  <br/>
-  <em>Tarjeta de ruta con estudiantes asignados y notificación toast de confirmación</em>
+  <em>Tarjeta de ruta con estudiantes asignados</em>
 </p>
 
 ---

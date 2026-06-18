@@ -26,5 +26,6 @@ var NOMBRE_EVENTOS = {
   RUTA_EDITADA:         "ruta:editada",
   RUTA_ELIMINADA:       "ruta:eliminada",
   ESTUDIANTE_AGREGADO:  "estudiante:agregado",
+  ESTUDIANTE_EDITADO:   "estudiante:editado",
   ESTUDIANTE_ELIMINADO: "estudiante:eliminado",
 };
