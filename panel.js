@@ -291,6 +291,8 @@ if (formEditarRuta) {
     ruta.hora      = document.getElementById("campo-hora-editar").value;
     guardarRutas(listaRutas);
 
+    
+
     cerrarModalEditar();
     pintarRutasAdmin();
     mostrarNotificacion("✏️ Ruta actualizada.", "exito");
