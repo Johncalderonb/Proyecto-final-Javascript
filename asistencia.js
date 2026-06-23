@@ -12,7 +12,7 @@ function pintarListaAsistencia() {
   });
 
   if (!contenedor.innerHTML) {
-    contenedor.innerHTML = "<p class='mensaje-vacio'>No hay estudiantes registrados.</p>";
+    contenedor.innerHTML = "<p class='mensaje-vacio'>Pa la casa que no hay estudiantes registrados..</p>";
   }
 }
 
